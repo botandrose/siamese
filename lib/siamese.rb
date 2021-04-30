@@ -33,7 +33,7 @@ module Siamese
     end
 
     def client
-      @client ||= Twilio::REST::Client.new(account_sid, auth_token)
+      @client ||= Twilio::REST::Client.new(twilio_account_sid, twilio_auth_token)
     end
   end
 end
