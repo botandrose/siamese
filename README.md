@@ -15,8 +15,6 @@ gem 'siamese'
 Configure in an initializer:
 ```ruby
 # config/initializers/siamese.rb
-require "siamese"
-
 Siamese.configure do |config|
   config.twilio_account_sid = Rails.application.credentials[:twilio_account_sid]
   config.twilio_auth_token = Rails.application.credentials[:twilio_auth_token]
