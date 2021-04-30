@@ -2,8 +2,8 @@ module Siamese
   class Message < Struct.new(:template, :context, :options)
     def deliver_now
       Siamese.deliver({
-        from: options[:from] || Siamese.from,
-        to: options[:to] || context.phone,
+        from: options[:from] || Siamese.defaults[:from],
+        to: options[:to] || context.phone || Siamese.defaults[:to],
         body: options[:body] || render,
       })
     end

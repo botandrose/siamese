@@ -3,9 +3,14 @@ require "siamese/message"
 
 module Siamese
   mattr_accessor(:deliveries) { [] }
-  mattr_accessor :account_sid, :auth_token, :from
+  mattr_accessor :twilio_account_sid, :twilio_auth_token
+  mattr_accessor(:defaults) { Hash.new }
 
   class << self
+    def configure
+      yield self
+    end
+
     def method_missing meth, *args, **kwargs, &block
       template = "sms/#{meth}"
       if ApplicationController.new.lookup_context.exists?(template)
