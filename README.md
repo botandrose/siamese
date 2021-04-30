@@ -1,8 +1,6 @@
 # Siamese
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/siamese`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This gem aims to provide simple SMS message sending with Twilio in Rails, broadly mimicing the ActionMailer API for familiarity.
 
 ## Installation
 
@@ -12,17 +10,32 @@ Add this line to your application's Gemfile:
 gem 'siamese'
 ```
 
-And then execute:
-
-    $ bundle install
-
-Or install it yourself as:
-
-    $ gem install siamese
-
 ## Usage
 
-TODO: Write usage instructions here
+Configure in an initializer:
+```ruby
+# config/initializers/siamese.rb
+require "siamese"
+
+Siamese.configure do |config|
+  config.twilio_account_sid = Rails.application.credentials[:twilio_account_sid]
+  config.twilio_auth_token = Rails.application.credentials[:twilio_auth_token]
+  config.defaults = { from: "+18008675309" }
+end
+```
+
+Make a template:
+```erb
+<!-- app/views/sms/example.erb -->
+Hello <%= context.name %>, welcome!
+```
+
+Deliver the message:
+```ruby
+Siamese.example(context).deliver_now
+```
+
+Siamese expects the context to have a `#phone` method to tell it where to send the message, otherwise you can specify it with the `to:` option to the template call.
 
 ## Development
 
