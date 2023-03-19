@@ -27,7 +27,7 @@ module Siamese
       if Rails.env.production?
         while deliveries.any?
           attributes = deliveries.pop
-          client.api.account.messages.create(attributes)
+          client.api.account.messages.create(**attributes)
         end
       end
     end
